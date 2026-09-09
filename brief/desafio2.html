@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>IRIS Orquestrador, desafio parte 2</title>
+<!--FONTE-->
+<!--ESTILO-->
+</head>
+<body>
+
+<section class="pagina escura">
+  <div class="topo">
+    <span class="kicker">fuse IoT &nbsp;·&nbsp; Capacitação</span>
+    <span class="kicker">Setembro 2026</span>
+  </div>
+
+  <div class="conteudo" style="display:flex; flex-direction:column; justify-content:center;">
+    <span class="kicker cor" style="margin-bottom:8mm; display:block;">Parte 2 de 2</span>
+
+    <h1 class="mega">IRIS Orquestrador:<br />fazer o agente<br />pensar barato.</h1>
+
+    <p class="sub" style="margin-top:10mm; max-width:138mm;">
+      Um chat que responde perguntas sobre uma fábrica inteira, consultando 14 MB de dados
+      bagunçados, sem mandar 14 MB para o modelo. A tela existe. O agente não.
+    </p>
+
+    <div class="capa-meta">
+      <div>
+        <span>Tempo estimado</span>
+        <strong>3 a 4 dias<br />de trabalho</strong>
+      </div>
+      <div>
+        <span>Stack</span>
+        <strong>React, Express<br />e Responses API</strong>
+      </div>
+      <div>
+        <span>Pré-requisito</span>
+        <strong>Node 20 e a<br />chave que eu te passo</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">01</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">01 &nbsp;·&nbsp; O que você vai construir</span>
+    <span class="kicker">IRIS Orquestrador &nbsp;·&nbsp; Parte 2</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">Um agente com<br />acesso à fábrica</h2>
+
+    <p>
+      Na parte 1 você consertou um app que já existia. Aqui você constrói um do zero, sobre uma
+      base que já existe.
+    </p>
+
+    <p>
+      O objetivo é um chat onde alguém da operação pergunta em português sobre as máquinas da
+      planta e recebe uma resposta correta, montada a partir dos dados reais. Isso é o coração do
+      IRIS de verdade, reduzido ao osso: <strong>um modelo de linguagem que sozinho não sabe nada
+      da sua fábrica, e um monte de dado que sozinho não responde pergunta nenhuma.</strong>
+      Juntar os dois é o trabalho.
+    </p>
+
+    <span class="rotulo">O que já está pronto</span>
+
+    <ul class="lista">
+      <li>A tela do chat em React, funcionando: envia mensagem, mostra estado de carregando,
+        mostra erro.</li>
+      <li>Uma API em Express com as rotas de dados da planta.</li>
+      <li>Uma base com <strong>129 ativos, 304 sensores, 190 mil leituras, 788 ordens de
+        manutenção, 10 mil alarmes e 453 paradas de máquina</strong>, que a API gera sozinha na
+        primeira execução.</li>
+    </ul>
+
+    <span class="rotulo">O que não está</span>
+
+    <ul class="lista">
+      <li>A rota <span class="mono">POST /api/chat</span> responde 501. É onde você trabalha.</li>
+      <li>Não tem <strong>uma linha sequer</strong> de código da API do modelo neste repositório.
+        Descobrir como aquilo funciona, lendo a documentação, faz parte do exercício.</li>
+      <li>Nenhuma rota de dados filtra, agrega ou resume coisa alguma. Todas devolvem o conteúdo
+        cru dos arquivos.</li>
+    </ul>
+
+    <div class="bloco">
+      <p style="margin-bottom:0;">
+        O backend é seu. Diferente da parte 1, aqui você pode criar rota, mudar estrutura e
+        reescrever o que quiser dentro de <span class="mono">server/</span>. A única coisa que não
+        se toca é o gerador da base: a bagunça precisa continuar sendo a mesma para todo mundo.
+      </p>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">02</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">02 &nbsp;·&nbsp; Como rodar</span>
+    <span class="kicker">IRIS Orquestrador &nbsp;·&nbsp; Parte 2</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">A chave e o resto</h2>
+
+    <pre><span class="cinza">$</span> npm install
+<span class="cinza">$</span> cp .env.example .env
+<span class="cinza">$</span> npm run dev</pre>
+
+    <p>
+      Na primeira execução a API gera a base sozinha, o que leva alguns segundos e ocupa uns 14 MB
+      em <span class="mono">server/dados/</span>. Depois disso sobe a API em
+      <span class="mono">localhost:3001</span> e a tela em <span class="mono">localhost:5173</span>.
+    </p>
+
+    <p>
+      A chave da OpenAI eu te passo separado, junto com o nome do modelo. Ela vai no
+      <span class="mono">.env</span>, que já está no <span class="mono">.gitignore</span>.
+    </p>
+
+    <div class="bloco atencao">
+      <span class="rotulo">A chave nunca chega no navegador</span>
+      <p>
+        Se ela aparecer no bundle do front, numa variável que começa com
+        <span class="mono">VITE_</span>, ou numa requisição visível no DevTools, está errado, mesmo
+        que funcione perfeitamente.
+      </p>
+      <p style="margin-bottom:0;">
+        Pense em quem consegue abrir o DevTools de um site em produção: qualquer pessoa.
+        <strong>Chave que o navegador vê é chave vazada</strong>, e quem paga a conta somos nós.
+      </p>
+    </div>
+
+    <span class="rotulo">Antes de escrever qualquer código</span>
+
+    <p>
+      Abra estas rotas no navegador e <strong>olhe o tamanho da resposta</strong> na aba Network:
+    </p>
+
+    <pre>GET /api/estatisticas   <span class="cinza">contagens e bytes de cada coleção</span>
+GET /api/tudo           <span class="cinza">tudo de uma vez, menos as leituras</span>
+GET /api/leituras       <span class="cinza">todas as leituras da planta</span>
+GET /api/ativos         <span class="cinza">todos os ativos cadastrados</span></pre>
+
+    <p style="margin-bottom:0;">
+      Esses quatro números vão definir todo o desenho da sua solução. Anote eles antes de começar.
+    </p>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">03</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">03 &nbsp;·&nbsp; O trabalho</span>
+    <span class="kicker">IRIS Orquestrador &nbsp;·&nbsp; Parte 2</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">Quatro frentes</h2>
+
+    <div class="etapa">
+      <span class="etapa-num">01</span>
+      <div>
+        <h3>Fazer o agente responder</h3>
+        <p>
+          <span class="mono">POST /api/chat</span> recebe as mensagens da conversa e precisa
+          devolver a resposta do agente. Use a <strong>Responses API da OpenAI</strong>, não a
+          Chat Completions. Instale o que precisar.
+        </p>
+        <p>
+          O agente tem que dar conta das perguntas que aparecem na tela inicial. Nenhuma delas tem
+          resposta pronta em lugar nenhum: todas exigem olhar dados e concluir alguma coisa.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa-num">02</span>
+      <div>
+        <h3>Não queimar dinheiro</h3>
+        <p>
+          Token custa. O IRIS roda o dia inteiro, com várias pessoas perguntando ao mesmo tempo, e
+          o que você desenhar aqui define a conta no fim do mês. Essa é a parte difícil, e está
+          detalhada na página seguinte.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa-num">03</span>
+      <div>
+        <h3>Botar ordem nos dados</h3>
+        <p>
+          A base saiu de três sistemas diferentes ao longo de seis anos e nunca foi padronizada.
+          Antes do agente responder qualquer coisa com confiança, alguém precisa arrumar isso.
+        </p>
+      </div>
+    </div>
+
+    <div class="etapa">
+      <span class="etapa-num">04</span>
+      <div>
+        <h3>Uma UX que não irrita</h3>
+        <p>
+          A tela de hoje é o mínimo que funciona. Uma consulta ao modelo demora segundos, e a
+          pessoa precisa perceber que algo está acontecendo. Precisa saber também
+          <strong>de onde veio a resposta</strong>: qual ativo, qual período, quantos registros o
+          agente olhou. Resposta de agente sem procedência é chute com boa redação.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">04</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">04 &nbsp;·&nbsp; A conta</span>
+    <span class="kicker">IRIS Orquestrador &nbsp;·&nbsp; Parte 2</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">O problema de verdade</h2>
+
+    <p>
+      Um modelo de linguagem cobra por token, na entrada e na saída. Tudo que você manda para ele
+      custa: a instrução, o histórico da conversa e, principalmente, <strong>os dados que você
+      colocar na frente dele</strong>.
+    </p>
+
+    <p>
+      A planta desta base tem 190 mil leituras e 10 mil alarmes, e isso é um mês só. Uma fábrica de
+      verdade acumula isso toda semana, para sempre. Se a sua solução depende de mandar os dados
+      para o modelo peneirar, ela não sobrevive nem à primeira pergunta, e se sobrevivesse você não
+      ia querer pagar.
+    </p>
+
+    <div class="bloco">
+      <span class="rotulo">O que eu quero ver no relatório</span>
+      <p>
+        <strong>Meça.</strong> A resposta da API informa quantos tokens cada chamada consumiu.
+        Mostre esse número na tela, em cada mensagem. Quem não mede não sabe.
+      </p>
+      <p>
+        <strong>Compare.</strong> Calcule quanto custaria mandar os dados crus e quanto custa a sua
+        implementação. Escreva os dois números e a diferença entre eles.
+      </p>
+      <p style="margin-bottom:0;">
+        <strong>Justifique.</strong> Diga por que o número onde você chegou é aceitável, e o que
+        você faria se precisasse cortar ele pela metade de novo.
+      </p>
+    </div>
+
+    <p>
+      Não vou te dar um número alvo. Descobrir qual é a ordem de grandeza aceitável, e perceber o
+      tamanho do abismo entre a solução ingênua e a boa, é justamente o que este exercício ensina.
+    </p>
+
+    <div class="bloco atencao">
+      <span class="rotulo">O que vale mais que qualquer economia</span>
+      <p style="margin-bottom:0;">
+        <strong>Um agente que responde número errado, com confiança, é pior que um agente que não
+        responde.</strong> A operação vai tomar decisão em cima do que ele falar. Se você tiver que
+        escolher entre uma resposta barata e uma resposta certa, escolha a certa e me conte o preço.
+      </p>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">05</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina">
+  <div class="topo">
+    <span class="kicker">05 &nbsp;·&nbsp; Os dados</span>
+    <span class="kicker">IRIS Orquestrador &nbsp;·&nbsp; Parte 2</span>
+  </div>
+
+  <div class="conteudo">
+    <h2 class="titulo">Ninguém padronizou<br />nada em seis anos</h2>
+
+    <p>
+      A base é real no sentido que importa: ela é bagunçada do jeito que dado de chão de fábrica é
+      bagunçado. Três sistemas diferentes gravaram nela ao longo dos anos, cada um do seu jeito, e
+      ninguém nunca parou para arrumar.
+    </p>
+
+    <span class="rotulo">O que você vai encontrar, em algum lugar ou em vários</span>
+
+    <ul class="lista">
+      <li>o mesmo ativo cadastrado mais de uma vez, com o código escrito de formas diferentes</li>
+      <li>campos com nomes diferentes para a mesma coisa, dependendo de quem gravou</li>
+      <li>datas em mais de um formato, dentro do mesmo arquivo</li>
+      <li>número gravado como texto, às vezes com vírgula decimal</li>
+      <li>registros apontando para coisas que não existem</li>
+      <li>valores impossíveis, de sensor com defeito</li>
+      <li>vocabulário inconsistente em campos de status e severidade</li>
+      <li>unidades de medida misturadas</li>
+    </ul>
+
+    <p>
+      Esse último item é o mais perigoso da lista, e vou deixar você descobrir por quê.
+    </p>
+
+    <div class="bloco">
+      <span class="rotulo">Uma dica só, e é a única</span>
+      <p style="margin-bottom:0;">
+        Antes de escrever qualquer linha do agente, pense em como seria a resposta ideal para
+        "como está a Prensa 01 hoje". Escreva ela à mão, do jeito que você gostaria de ler. Agora
+        conte quantos dados uma pessoa precisaria olhar para escrever aquilo, e compare com o
+        tamanho do que a API te devolve hoje. <strong>A diferença entre esses dois tamanhos é o
+        desafio inteiro.</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; IRIS</span>
+      <span class="numero">06</span>
+    </div>
+  </div>
+</section>
+
+<section class="pagina escura">
+  <div class="topo">
+    <span class="kicker">06 &nbsp;·&nbsp; Por fim</span>
+    <span class="kicker">IRIS Orquestrador &nbsp;·&nbsp; Parte 2</span>
+  </div>
+
+  <div class="conteudo" style="display:flex; flex-direction:column; justify-content:center;">
+    <span class="kicker cor" style="margin-bottom:8mm; display:block;">Por que este exercício existe</span>
+
+    <p class="fecho">
+      Fazer um modelo responder é fácil, tem tutorial de quinze minutos. Fazer ele responder
+      certo, sobre dados que ninguém organizou, sem torrar orçamento, é o que a gente faz aqui
+      todo dia.
+    </p>
+
+    <p style="color:#C4C4CC; max-width:150mm;">
+      Este exercício é uma versão pequena e sem cliente esperando de um problema que está em
+      produção agora. As decisões que você vai tomar nele são as mesmas que a gente tomou no IRIS,
+      e algumas a gente tomou errado da primeira vez.
+    </p>
+
+    <div class="bloco" style="margin-top:8mm;">
+      <span class="rotulo">O que me mandar</span>
+      <p style="color:#C4C4CC;">
+        O repositório funcionando, um <span class="mono">RELATORIO.md</span> com o desenho da sua
+        solução, o que você achou de errado nos dados e os números de token, e uns prints ou um
+        vídeo curto do chat respondendo três perguntas diferentes, para eu ver funcionando sem
+        precisar da chave.
+      </p>
+      <p style="margin-bottom:0; color:#C4C4CC;">
+        Travou por mais de uma hora no mesmo ponto, me chama. Levar quatro dias é normal. Levar
+        quatro dias travado no mesmo erro, não.
+      </p>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <div class="cruzes">
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+      <span class="cruz"></span>
+    </div>
+    <div class="rodape-linha">
+      <span class="marca"><b>fuse IoT</b> &nbsp;·&nbsp; Bom trabalho.</span>
+      <span class="numero">07</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

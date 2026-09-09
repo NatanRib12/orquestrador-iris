@@ -1,0 +1,368 @@
+:root {
+    --blue: #3436B1;
+    --blue-dark: #202AA2;
+    --red: #CF2A2E;
+    --orange: #F47D4E;
+    --green-accent: #00AA4C;
+
+    --papel: #F5F5F7;
+    --papel-fundo: #EDEDF0;
+    --noite: #0A0A0F;
+
+    --tinta: #1A1A1A;
+    --tinta-2: #444444;
+    --tinta-3: #8A8A90;
+
+    --fonte: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    --mono: 'Cascadia Mono', 'Segoe UI Mono', Consolas, ui-monospace, monospace;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--fonte);
+    font-weight: 400;
+    color: var(--tinta);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .pagina {
+    width: 210mm;
+    height: 297mm;
+    position: relative;
+    overflow: hidden;
+    background: var(--papel);
+    padding: 18mm 20mm 15mm;
+    display: flex;
+    flex-direction: column;
+    page-break-after: always;
+  }
+
+  .pagina:last-child {
+    page-break-after: auto;
+  }
+
+  .pagina.escura {
+    background: var(--noite);
+    color: #FFFFFF;
+    --tinta: #FFFFFF;
+    --tinta-2: #C4C4CC;
+    --tinta-3: #6E6E7A;
+  }
+
+  .cruz {
+    display: inline-block;
+    position: relative;
+    width: 9px;
+    height: 9px;
+    color: var(--blue);
+    flex: none;
+  }
+
+  .pagina.escura .cruz {
+    color: #4A4CD6;
+  }
+
+  .cruz::before,
+  .cruz::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+  }
+
+  .cruz::before {
+    left: 50%;
+    top: 0;
+    width: 1.5px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  .cruz::after {
+    top: 50%;
+    left: 0;
+    height: 1.5px;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+
+  .cruzes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1.5px solid rgba(26, 26, 26, 0.12);
+    padding-bottom: 5mm;
+    margin-bottom: 12mm;
+  }
+
+  .escura .topo {
+    border-bottom-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 7.5pt;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--tinta-3);
+  }
+
+  .kicker.cor {
+    color: var(--blue);
+  }
+
+  .escura .kicker.cor {
+    color: #7B7DEB;
+  }
+
+  .mega {
+    font-size: 46pt;
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    margin: 0;
+  }
+
+  .titulo {
+    font-size: 25pt;
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin: 0 0 7mm;
+  }
+
+  .sub {
+    font-size: 14pt;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--tinta-2);
+    margin: 0;
+  }
+
+  p {
+    font-size: 10.5pt;
+    line-height: 1.62;
+    color: var(--tinta-2);
+    margin: 0 0 4.5mm;
+    max-width: 155mm;
+  }
+
+  p strong {
+    font-weight: 400;
+    color: var(--tinta);
+    box-shadow: inset 0 -0.42em rgba(52, 54, 177, 0.14);
+  }
+
+  .escura p strong {
+    box-shadow: inset 0 -0.42em rgba(123, 125, 235, 0.28);
+  }
+
+  .conteudo {
+    flex: 1;
+  }
+
+  .rodape {
+    margin-top: auto;
+    padding-top: 8mm;
+  }
+
+  .rodape-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4mm;
+  }
+
+  .marca {
+    font-size: 8pt;
+    letter-spacing: 0.04em;
+    color: var(--tinta-3);
+  }
+
+  .marca b {
+    font-weight: 400;
+    color: var(--tinta-2);
+  }
+
+  .numero {
+    font-family: var(--mono);
+    font-size: 8pt;
+    color: var(--tinta-3);
+  }
+
+  .bloco {
+    background: var(--papel-fundo);
+    border-left: 2px solid var(--blue);
+    padding: 6mm 7mm;
+    margin: 0 0 6mm;
+    max-width: 155mm;
+  }
+
+  .bloco p:last-child {
+    margin-bottom: 0;
+  }
+
+  .bloco.atencao {
+    border-left-color: var(--red);
+  }
+
+  .escura .bloco {
+    background: rgba(255, 255, 255, 0.05);
+    border-left-color: #4A4CD6;
+  }
+
+  .rotulo {
+    font-family: var(--mono);
+    font-size: 7pt;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tinta-3);
+    display: block;
+    margin-bottom: 3mm;
+  }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 9.5pt;
+  }
+
+  pre {
+    font-family: var(--mono);
+    font-size: 9pt;
+    line-height: 1.75;
+    color: var(--tinta);
+    background: var(--papel-fundo);
+    border: 1.5px solid rgba(26, 26, 26, 0.1);
+    padding: 5mm 6mm;
+    margin: 0 0 6mm;
+    max-width: 155mm;
+    white-space: pre-wrap;
+  }
+
+  pre .cinza {
+    color: var(--tinta-3);
+  }
+
+  .lista {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 6mm;
+    max-width: 155mm;
+  }
+
+  .lista li {
+    font-size: 10.5pt;
+    line-height: 1.6;
+    color: var(--tinta-2);
+    padding-left: 7mm;
+    position: relative;
+    margin-bottom: 3mm;
+  }
+
+  .lista li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 3.5mm;
+    height: 1.5px;
+    background: var(--blue);
+  }
+
+  .escura .lista li::before {
+    background: #4A4CD6;
+  }
+
+  .etapa {
+    display: grid;
+    grid-template-columns: 14mm 1fr;
+    gap: 0 4mm;
+    margin-bottom: 9mm;
+    max-width: 158mm;
+  }
+
+  .etapa-num {
+    font-size: 25pt;
+    font-weight: 400;
+    line-height: 0.9;
+    color: var(--blue);
+    letter-spacing: -0.03em;
+  }
+
+  .etapa h3 {
+    font-size: 13pt;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    margin: 0 0 2.5mm;
+    color: var(--tinta);
+  }
+
+  .etapa p {
+    margin-bottom: 2.5mm;
+  }
+
+  .etapa p:last-child {
+    margin-bottom: 0;
+  }
+
+  .capa-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6mm;
+    margin-top: 14mm;
+    padding-top: 7mm;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.14);
+    max-width: 160mm;
+  }
+
+  .capa-meta div span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 7pt;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--tinta-3);
+    margin-bottom: 2.5mm;
+  }
+
+  .capa-meta div strong {
+    font-size: 10.5pt;
+    font-weight: 400;
+    color: #FFFFFF;
+    line-height: 1.4;
+  }
+
+  .fecho {
+    font-size: 15pt;
+    line-height: 1.45;
+    letter-spacing: -0.015em;
+    color: #FFFFFF;
+    max-width: 150mm;
+    margin: 0 0 6mm;
+  }
