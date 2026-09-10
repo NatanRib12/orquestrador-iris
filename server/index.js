@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import * as dados from './armazenamento.js';
 import { gerar, existeBase } from './gerar-dados.js';
+import { orquestrarResposta } from './servicos/orquestrador.js';
 
 const app = express();
 const PORTA = Number(process.env.PORT || 3001);
@@ -71,12 +72,35 @@ app.get('/api/tudo', (req, res) => {
   });
 });
 
-app.post('/api/chat', (req, res) => {
-  res.status(501).json({
-    erro: 'nao implementado',
-    detalhe:
-      'Esta rota e o seu trabalho. Ela recebe { mensagens } e deve devolver a resposta do agente.',
-  });
+app.post('/api/chat', async (req, res, next) => {
+  try {
+    const { mensagem, mensagens } = req.body;
+
+    let textoUsuario = mensagem;
+
+    if (!textoUsuario && Array.isArray(mensagens) && mensagens.length > 0) {
+      const ultima = mensagens[mensagens.length - 1];
+      textoUsuario = typeof ultima === 'string' 
+        ? ultima 
+        : (ultima.conteudo || ultima.content || ultima.texto || ultima.mensagem);
+    }
+
+    if (!textoUsuario) {
+      return res.status(400).json({ erro: 'A mensagem do usuário é obrigatória.' });
+    }
+
+    const resultado = await orquestrarResposta(textoUsuario);
+
+    if (resultado.tokensConsumidos) {
+      console.log(`- Tokens do Prompt:   ${resultado.tokensConsumidos.prompt}`);
+      console.log(`- Tokens da Resposta: ${resultado.tokensConsumidos.resposta}`);
+      console.log(`- Total de Tokens:    ${resultado.tokensConsumidos.total}`);
+    }
+
+    return res.json(resultado);
+  } catch (erro) {
+    next(erro);
+  }
 });
 
 app.use((erro, req, res, next) => {

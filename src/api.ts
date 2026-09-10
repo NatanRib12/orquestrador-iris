@@ -5,8 +5,15 @@ export type Mensagem = {
 
 export type RespostaDoChat = {
   texto?: string;
+  resposta?: string;
   erro?: string;
   detalhe?: string;
+  tokensConsumidos?: {
+    prompt: number;
+    resposta: number;
+    total: number;
+  };
+  origem?: string;
 };
 
 export async function conversar(mensagens: Mensagem[]): Promise<RespostaDoChat> {
@@ -22,7 +29,10 @@ export async function conversar(mensagens: Mensagem[]): Promise<RespostaDoChat> 
     return { erro: corpo.erro || `HTTP ${resposta.status}`, detalhe: corpo.detalhe };
   }
 
-  return corpo;
+  return {
+    ...corpo,
+    texto: corpo.texto || corpo.resposta
+  };
 }
 
 export async function estatisticas() {
