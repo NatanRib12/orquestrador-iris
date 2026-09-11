@@ -27,7 +27,15 @@ export function Chat() {
       if (resposta.erro) {
         setErro(resposta.detalhe ? `${resposta.erro}: ${resposta.detalhe}` : resposta.erro);
       } else {
-        setMensagens([...historico, { papel: 'agente', texto: resposta.texto || '' }]);
+        setMensagens([
+          ...historico,
+          {
+            papel: 'agente',
+            texto: resposta.texto || '',
+            procedencia: resposta.procedencia,
+            tokensConsumidos: resposta.tokensConsumidos,
+          },
+        ]);
       }
     } catch (falha: any) {
       setErro(falha.message);

@@ -1,6 +1,18 @@
+export type Procedencia = {
+  ativos: string[];
+  totalRegistros: number;
+  detalheRegistros: string;
+};
+
 export type Mensagem = {
   papel: 'usuario' | 'agente';
   texto: string;
+  procedencia?: Procedencia;
+  tokensConsumidos?: {
+    prompt: number;
+    resposta: number;
+    total: number;
+  };
 };
 
 export type RespostaDoChat = {
@@ -8,6 +20,7 @@ export type RespostaDoChat = {
   resposta?: string;
   erro?: string;
   detalhe?: string;
+  procedencia?: Procedencia;
   tokensConsumidos?: {
     prompt: number;
     resposta: number;

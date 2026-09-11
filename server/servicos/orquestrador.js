@@ -112,6 +112,21 @@ export async function orquestrarResposta(mensagemUsuario) {
     };
   }
 
+  const totalAlarmes = contextoDados.alarmes?.length || 0;
+  const totalOrdens = contextoDados.ordens?.length || 0;
+  const totalParadas = contextoDados.paradas?.length || 0;
+  const totalRegistros = totalAlarmes + totalOrdens + totalParadas;
+
+  const detalheRegistros = [
+    totalAlarmes > 0 ? `${totalAlarmes} alarmes` : null,
+    totalOrdens > 0 ? `${totalOrdens} ordens` : null,
+    totalParadas > 0 ? `${totalParadas} paradas` : null,
+  ].filter(Boolean).join(', ') || 'Consulta cadastral';
+
+  const ativosConsultados = contextoDados.ativoAlvo 
+    ? [contextoDados.ativoAlvo.codigo] 
+    : (contextoDados.ativos ? ['Todos os ativos'] : ['Geral']);
+
   const contextoFiltrado = serializarParaTexto(contextoDados);
   const promptSistema = construirPromptSistema(contextoFiltrado);
   const apiKey = process.env.OPENAI_API_KEY;
@@ -146,7 +161,12 @@ export async function orquestrarResposta(mensagemUsuario) {
   // Extração do conteúdo e medição dos tokens consumidos
   return {
     resposta: dados.choices[0]?.message?.content || 'Não foi possível gerar uma resposta.',
-    tokensConsumidos: {
+    procedencia: {
+      ativos: ativosConsultados,
+      totalRegistros,
+      detalheRegistros
+    },
+      tokensConsumidos:{
       prompt: dados.usage?.prompt_tokens || 0,
       resposta: dados.usage?.completion_tokens || 0,
       total: dados.usage?.total_tokens || 0

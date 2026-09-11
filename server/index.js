@@ -91,12 +91,6 @@ app.post('/api/chat', async (req, res, next) => {
 
     const resultado = await orquestrarResposta(textoUsuario);
 
-    if (resultado.tokensConsumidos) {
-      console.log(`- Tokens do Prompt:   ${resultado.tokensConsumidos.prompt}`);
-      console.log(`- Tokens da Resposta: ${resultado.tokensConsumidos.resposta}`);
-      console.log(`- Total de Tokens:    ${resultado.tokensConsumidos.total}`);
-    }
-
     return res.json(resultado);
   } catch (erro) {
     next(erro);
