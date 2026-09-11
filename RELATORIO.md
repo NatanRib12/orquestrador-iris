@@ -1,44 +1,6 @@
 # Relatório Técnico
 
-## 1 Desenho da arquitetura
-
-flowchart TD
-    subgraph Frontend ["Frontend (React + TypeScript)"]
-        UI["Chat.tsx / Mensagem.tsx"]
-        API_CLIENT["api.ts (Fetch Client)"]
-    end
-
-    subgraph Backend ["Backend (Node.js + Express)"]
-        SERVER["server/index.js (API Endpoints)"]
-        ORQ["servicos/orquestrador.js (Orquestrador)"]
-        
-        subgraph Sanitizadores ["Camada de Sanitização Local"]
-            SAN_ALM["sanitizarAlarmes.js"]
-            SAN_ATI["sanitizarAtivos.js"]
-            SAN_SEN["sanitizarSensores.js"]
-            SAN_ORD["sanitizarOrdens.js"]
-            SAN_PAR["sanitizarParadas.js"]
-        end
-    end
-
-    subgraph External ["Serviço Externo"]
-        OPENAI["OpenAI API (gpt-5.6-luna)"]
-    end
-
-    UI -->|Envia mensagem| API_CLIENT
-    API_CLIENT -->|POST /api/chat| SERVER
-    SERVER -->|Solicita orquestração| ORQ
-    ORQ -->|Filtra & Limpa| Sanitizadores
-    Sanitizadores -->|Retorna contexto enxuto| ORQ
-    ORQ -->|Prompt Otimizado + Contexto Compacto| OPENAI
-    OPENAI -->|Resposta + Métricas de Tokens| ORQ
-    ORQ -->|Resposta + Procedência + Tokens| SERVER
-    SERVER -->|JSON Response| API_CLIENT
-    API_CLIENT -->|Exibe Resposta + Metadados| UI
-
----
-
-## Funcionamento da Arquitetura:
+## 1 Funcionamento da Arquitetura:
 
 ### Interface e Cliente (Frontend): 
 A conversa é gerenciada pelo Chat.tsx e renderizada pelo Mensagem.tsx. As chamadas HTTP são centralizadas no api.ts.
